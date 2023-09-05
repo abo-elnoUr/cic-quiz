@@ -1,0 +1,18 @@
+{
+  "employee": [
+    {
+      "id": 1,
+      "name": "mohamed",
+      "age": 26,
+      "birthOfDate": "1994-01-01",
+      "address": "alex"
+    },
+    {
+      "name": "mohamed2222",
+      "age": 26,
+      "birthOfDate": "1994-01-01",
+      "address": "alex",
+      "id": 2
+    }
+  ]
+}

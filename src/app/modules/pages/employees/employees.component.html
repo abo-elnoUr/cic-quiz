@@ -1,0 +1,43 @@
+<section class="grid grid-cols-1 m-5 justify-items-center">
+  <h1 *ngIf="!isEdit()" class="font-bold text-2xl text-gray-500">Add Employee</h1>
+  <h1 *ngIf="isEdit()" class="font-bold text-2xl text-gray-500">Edit Employee</h1>
+  <div class="content-center w-1/2">
+    <form [formGroup]="employeeForm" autocomplete="off" (onSubmit)="onSubmit()">
+      <div class="mb-6">
+        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Name</label>
+        <input autocomplete="off" type="text" id="name" formControlName="name"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 "
+          placeholder="your name" >
+      </div>
+
+      <div class="mb-6">
+        <label for="birth" class="block mb-2 text-sm font-medium text-gray-900 ">Birth
+          Of Date</label>
+        <input autocomplete="off" type="date" id="birth"
+          (change)="convertDateToAge($any($event.target).value)"
+          formControlName="birthOfDate"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 ">
+      </div>
+
+      <div class="mb-6">
+        <label for="age" class="block mb-2 text-sm font-medium text-gray-900 ">Age</label>
+        <input autocomplete="off" type="number" id="age" placeholder="your age" [value]="age()"
+          formControlName="age"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 ">
+          <small>Enter your birthdate to calculate age 😉</small>
+      </div>
+
+      <div class="mb-6">
+        <label for="address"
+          class="block mb-2 text-sm font-medium text-gray-900 ">Address</label>
+        <textarea id="address" placeholder="your address"
+          formControlName="address"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 "
+          rows="5"></textarea>
+      </div>
+
+      <button type="submit"
+        class="text-white bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center " >Submit</button>
+    </form>
+  </div>
+</section>
