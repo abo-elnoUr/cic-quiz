@@ -8,6 +8,9 @@
         <input autocomplete="off" type="text" id="name" formControlName="name"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 "
           placeholder="your name" >
+          <small *ngIf="employeeForm.get('name')?.errors && employeeForm.get('name')?.touched" class="text-gray-500">
+            name is requierd
+          </small>
       </div>
 
       <div class="mb-6">
@@ -17,6 +20,9 @@
           (change)="convertDateToAge($any($event.target).value)"
           formControlName="birthOfDate"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 ">
+          <small *ngIf="employeeForm.get('birthOfDate')?.errors && employeeForm.get('birthOfDate')?.touched" class="text-gray-500">
+            birth of date is requierd
+          </small>
       </div>
 
       <div class="mb-6">
@@ -24,7 +30,8 @@
         <input autocomplete="off" type="number" id="age" placeholder="your age" [value]="age()"
           formControlName="age"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 ">
-          <small>Enter your birthdate to calculate age 😉</small>
+          <small *ngIf="age() == 0" class="font-light text-gray-500 ">Enter your birthdate to calculate age 😉</small>
+          <small *ngIf="(employeeForm.get('age')?.getRawValue() < 18) && showAgeError == true" class="font-light text-gray-500 ">your age must be more 18y</small>
       </div>
 
       <div class="mb-6">
@@ -36,8 +43,8 @@
           rows="5"></textarea>
       </div>
 
-      <button type="submit"
-        class="text-white bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center " >Submit</button>
+      <button type="submit" [disabled]="!employeeForm.valid" (click)="onSubmit()"
+        class="text-white bg-blue-700 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
     </form>
   </div>
 </section>

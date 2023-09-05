@@ -3,9 +3,7 @@ import { EmployeeForm } from 'src/app/models/employee.type';
 import { EmployeeFormClass } from './employee.form';
 import { ActivatedRoute } from '@angular/router';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
-import { IEmployeeResponse } from 'src/app/models/employee.model';
 import { EmployeeActionService } from './../../../shared/services/employee/employee-action.service';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { SweetAlertService } from 'src/app/shared/services/global/sweet-alert.service';
 
 @Component({
@@ -27,16 +25,18 @@ export class EmployeesComponent implements OnInit {
   isEdit = signal(false);
   employeeById$ = this.#employeeService.employeeById$
   age = signal(0)
+  showAgeError: boolean = false
+
 
   ngOnInit(): void {
     this.#employeeId.set(this.#route.snapshot.params['id']);
-    if(+this.#employeeId() === 0) return;
+    if (+this.#employeeId() === 0) return;
     this.isEdit.set(true);
     this.getEmployeeById();
   }
 
   convertDateToAge(date: Date) {
-    const age =  new Date().getFullYear() - new Date(date).getFullYear()
+    const age = new Date().getFullYear() - new Date(date).getFullYear()
     this.age.set(age)
   }
 
@@ -57,9 +57,19 @@ export class EmployeesComponent implements OnInit {
 
   }
 
+
   onSubmit() {
-    if(+this.#employeeId() === 0) this.createEmployee();
-    else this.editEmployee();
+    if(!this.employeeForm.valid) return
+    if (this.age() < 18) {
+      this.showAgeError = true
+    } else {
+      this.showAgeError = false
+    }
+    console.log(this.age(), this.showAgeError);
+
+
+    // if(+this.#employeeId() === 0) this.createEmployee();
+    // else this.editEmployee();
   }
 
 
