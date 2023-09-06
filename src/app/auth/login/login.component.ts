@@ -21,6 +21,8 @@ export class LoginComponent {
   })
 
   login() {
+    console.log(this.loginForm.getRawValue());
+
     this.#authService.login(this.loginForm.getRawValue())
   }
 

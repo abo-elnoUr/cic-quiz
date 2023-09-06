@@ -14,8 +14,11 @@ export class AuthService {
   login(credintial: ILogin) {
     return this.http.get<ILoginResponse>(api).subscribe({
       next: (res) => {
-        if(credintial.username === res.user.username && credintial.password === res.user.password) {
+        if(credintial?.username == res?.user?.username && credintial?.password == res?.user?.password) {
+          console.log('logged in');
           localStorage.setItem('employeeToken', res.token)
+        } else {
+          console.log('not logged in');
         }
       }
     })
