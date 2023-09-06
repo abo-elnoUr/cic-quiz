@@ -1,25 +1,15 @@
 {
   "employee": [
+
+  ],
+  "auth": [
     {
-      "id": 1,
-      "name": "mohamed",
-      "age": 26,
-      "birthOfDate": "1994-01-01",
-      "address": "alex"
-    },
-    {
-      "name": "ahmed",
-      "age": 24,
-      "birthOfDate": "1999-06-08",
-      "address": "plapla22",
-      "id": 3
-    },
-    {
-      "name": "das",
-      "age": 30,
-      "birthOfDate": "1993-07-15",
-      "address": "s",
-      "id": 4
+      "token": "123456789",
+      "user": {
+        "id": 1,
+        "username": "admin",
+        "password": "admin"
+      }
     }
   ]
 }

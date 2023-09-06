@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { NonNullableFormBuilder, Validators } from "@angular/forms";
-import { IEmployee } from "src/app/models/employee.model";
-import { EmployeeForm } from "src/app/models/employee.type";
+import { IEmployee } from "src/app/models/employee/employee.model";
+import { EmployeeForm } from "src/app/models/employee/employee.type";
 
 @Injectable()
 export class EmployeeFormClass {

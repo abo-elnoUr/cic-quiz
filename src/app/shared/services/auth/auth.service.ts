@@ -1,17 +1,33 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ILogin, ILoginResponse } from 'src/app/models/auth/login.model';
+
+const api = 'http://localhost:3000/auth'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  http = inject(HttpClient)
 
-  login() {}
+  login(credintial: ILogin) {
+    return this.http.get<ILoginResponse>(api).subscribe({
+      next: (res) => {
+        if(credintial.username === res.user.username && credintial.password === res.user.password) {
+          localStorage.setItem('employeeToken', res.token)
+        }
+      }
+    })
+  }
 
-  logout() {}
+  logout() {
+    localStorage.removeItem('employeeToken')
+  }
 
-  isLoggedIn() {}
+  isLoggedIn() {
+    return !!localStorage.getItem('employeeToken')
+  }
 
 
 

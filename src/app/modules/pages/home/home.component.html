@@ -51,7 +51,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="bg-white border-b"
+        <ng-container *ngIf="(employees$ | async)?.length !== 0; else noEmployees">
+          <tr class="bg-white border-b"
           *ngFor="let emp of employees$ | async">
           <th scope="row"
             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
@@ -73,10 +74,17 @@
               class="font-medium text-red-600  hover:underline hover:cursor-pointer">Remove</a>
           </td>
         </tr>
-
+        </ng-container>
+        <ng-template #noEmployees>
+          <tr>
+            <td colspan="5" class="px-6 py-4 text-center font-bold text-gray-500 text-2xl">
+              No Employees Found
+            </td>
+          </tr>
+        </ng-template>
       </tbody>
     </table>
-    <div class="grid justify-center my-3">
+    <div *ngIf="(employees$ | async)?.length !== 0" class="grid justify-center my-3">
       <div class="flex">
         <a (click)="onPrevious()"
           class="flex items-center justify-center px-3 h-8 hover:cursor-pointer text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 ">

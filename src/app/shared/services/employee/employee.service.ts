@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { IEmployee, IEmployeeResponse } from 'src/app/models/employee.model';
+import { IEmployee, IEmployeeResponse } from 'src/app/models/employee/employee.model';
 import { EmployeeActionService } from './employee-action.service';
-import { EMPTY, combineLatest, reduce, shareReplay, switchMap } from 'rxjs';
+import { EMPTY, reduce, shareReplay, switchMap } from 'rxjs';
 
 const api = `http://localhost:3000/employee`;
 

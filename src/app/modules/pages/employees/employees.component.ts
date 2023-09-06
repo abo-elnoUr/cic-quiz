@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { EmployeeForm } from 'src/app/models/employee.type';
+import { EmployeeForm } from 'src/app/models/employee/employee.type';
 import { EmployeeFormClass } from './employee.form';
 import { ActivatedRoute } from '@angular/router';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
