@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { IEmployee, IEmployeeResponse } from 'src/app/models/employee.model';
 import { EmployeeActionService } from './employee-action.service';
-import { combineLatest, shareReplay, switchMap } from 'rxjs';
+import { EMPTY, combineLatest, reduce, shareReplay, switchMap } from 'rxjs';
 
 const api = `http://localhost:3000/employee`;
 
@@ -27,16 +27,21 @@ export class EmployeeService {
     shareReplay(1)
   )
 
+  employeesCount$ = this.employees$.pipe(
+    reduce((acc, value) => acc + value.length, 0 as number)
+  )
+
+
   employeeById$ = this.#employeeAction.employeeId$.pipe(
-    switchMap(id => this.http.get<IEmployeeResponse>(`${api}/${id}`)), shareReplay(1)
+    switchMap(id => id ? this.http.get<IEmployeeResponse>(`${api}/${id}`) : EMPTY), shareReplay(1)
   )
 
   updateEmployee(employee: IEmployee, id: string) {
-    return this.http.put<IEmployeeResponse>(`${api}/${id}`, employee)
+    return this.http.put<IEmployeeResponse>(`${api}/${id}`, employee);
   }
 
   deleteEmployee(id: number) {
-    return this.http.delete<void>(`${api}/${id}`)
+    return this.http.delete<void>(`${api}/${id}`);
   }
 
 

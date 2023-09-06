@@ -24,7 +24,6 @@ export class EmployeesComponent implements OnInit {
   #employeeId = signal('');
   isEdit = signal(false);
   employeeById$ = this.#employeeService.employeeById$
-  age = signal(0)
   showAgeError: boolean = false
 
 
@@ -37,7 +36,6 @@ export class EmployeesComponent implements OnInit {
 
   convertDateToAge(date: Date) {
     const age = new Date().getFullYear() - new Date(date).getFullYear()
-    this.age.set(age)
     this.employeeForm.patchValue({ age: age })
   }
 
@@ -48,9 +46,12 @@ export class EmployeesComponent implements OnInit {
 
   createEmployee() {
     this.#employeeService.createEmployee(this.employeeForm.getRawValue()).subscribe({
-      next: (res) => {
-        this.#sweetAlert.saveToast()
+      next: () => {
+        this.#sweetAlert.saveToast('Employee Created Successfully')
         this.#employeeAction.setRefreshEmployeeList()
+        this.employeeForm.reset()
+      }, error: (err) => {
+        this.#sweetAlert.error(err.error.message)
       }
     })
   }
@@ -58,7 +59,8 @@ export class EmployeesComponent implements OnInit {
   setEmployee() {
     this.employeeById$.subscribe({
       next: (res) => {
-        this.#employeeFormClass.patchEmployeeForm(this.employeeForm, res)
+        if (res)
+          this.#employeeFormClass.patchEmployeeForm(this.employeeForm, res)
       }
     })
   }
@@ -66,21 +68,25 @@ export class EmployeesComponent implements OnInit {
   editEmployee() {
     this.#employeeService.updateEmployee(this.employeeForm.getRawValue(), this.#employeeId()).subscribe({
       next: (res) => {
-        this.#sweetAlert.updateToast()
+        this.#sweetAlert.updateToast('Employee Updated Successfully')
         this.#employeeAction.setRefreshEmployeeList()
+        this.isEdit.set(false);
+      }, error: (err) => {
+        this.#sweetAlert.error(err.error.message)
       }
     })
   }
 
 
   onSubmit() {
-    if(!this.employeeForm.valid) return
-    if (this.age() < 18) {
+    if (!this.employeeForm.valid) return
+    if (this.employeeForm.controls.age.value < 18) {
       this.showAgeError = true
+      return
     } else {
       this.showAgeError = false
     }
-    if(+this.#employeeId() === 0) this.createEmployee();
+    if (+this.#employeeId() === 0) this.createEmployee();
     else this.editEmployee();
   }
 

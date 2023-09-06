@@ -77,4 +77,16 @@ export class SweetAlertService {
     })
   }
 
+  error(err?: string): Promise<any> | null {
+    return Swal.fire({
+      icon: 'error',
+      customClass: {
+        'container': 'pre-line'
+      },
+      title:  'Something Wrong!!',
+      text: err,
+      focusConfirm: true
+    })
+  }
+
 }

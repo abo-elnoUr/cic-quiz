@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +43,10 @@ export class EmployeeActionService {
   filter$ = combineLatest({
     _limit: this.limit$,
     _page: this.page$,
-    q: this.searchText$,
+    q: this.searchText$.pipe(
+      debounceTime(500),
+      distinctUntilChanged()
+    ),
     refresh: this.refreshEmployeeList$
   })
 }

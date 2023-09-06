@@ -7,7 +7,7 @@
   </div>
 
   <div class="mx-2 mb-5">
-    <form [formGroup]="searchForm">
+    <form >
       <label for="default-search"
         class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
       <div class="relative">
@@ -21,11 +21,9 @@
               d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
           </svg>
         </div>
-        <input type="search" id="default-search" formControlName="search"
+        <input type="search" id="default-search"
           class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none "
-          placeholder="Search..." >
-        <!-- <button type="submit"
-          class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 ">Search</button> -->
+          placeholder="Search..." (keyup)="searchInEmployeeList($any($event.target).value)" >
       </div>
     </form>
   </div>
@@ -54,7 +52,7 @@
       </thead>
       <tbody>
         <tr class="bg-white border-b"
-          *ngFor="let emp of employees$ | async; let i = index">
+          *ngFor="let emp of employees$ | async">
           <th scope="row"
             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
             {{ emp.name }}

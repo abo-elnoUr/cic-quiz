@@ -5,10 +5,10 @@
     <form [formGroup]="employeeForm" autocomplete="off" >
       <div class="mb-6">
         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Name</label>
-        <input autocomplete="off" type="text" id="name" formControlName="name"
+        <input autocomplete="off" type="text" id="name" [formControl]="employeeForm.controls.name"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 "
           placeholder="your name" >
-          <small *ngIf="employeeForm.get('name')?.errors && employeeForm.get('name')?.touched" class="text-gray-500">
+          <small *ngIf="employeeForm.controls.name.errors && employeeForm.controls.name.touched" class="text-gray-500">
             name is requierd
           </small>
       </div>
@@ -18,27 +18,28 @@
           Of Date</label>
         <input autocomplete="off" type="date" id="birth"
           (change)="convertDateToAge($any($event.target).value)"
-          formControlName="birthOfDate"
+          [value]="employeeForm.controls.birthOfDate.valueChanges | async"
+          [formControl]="employeeForm.controls.birthOfDate"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 ">
-          <small *ngIf="employeeForm.get('birthOfDate')?.errors && employeeForm.get('birthOfDate')?.touched" class="text-gray-500">
+          <small *ngIf="employeeForm.controls.birthOfDate.errors && employeeForm.controls.birthOfDate.touched" class="text-gray-500">
             birth of date is requierd
           </small>
       </div>
 
       <div class="mb-6">
         <label for="age" class="block mb-2 text-sm font-medium text-gray-900 ">Age</label>
-        <input autocomplete="off" type="number" id="age" placeholder="your age" [value]="age()"
-          formControlName="age"
+        <input autocomplete="off" type="number" id="age" placeholder="your age" [value]="employeeForm.controls.age.value"
+          [formControl]="employeeForm.controls.age"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 ">
-          <small *ngIf="age() == 0" class="font-light text-gray-500 ">Enter your birthdate to calculate age 😉</small><br>
-          <small *ngIf="(employeeForm.get('age')?.getRawValue() < 18) && showAgeError == true" class="font-light text-gray-500 ">your age must be more 18y</small>
+          <small *ngIf="employeeForm.controls.age.value == 0" class="font-light text-gray-500 ">Enter your birthdate to calculate age 😉</small><br>
+          <small *ngIf="(employeeForm.controls.age.getRawValue() < 18) == true" class="font-light text-gray-500 ">your age must be more 18y</small>
       </div>
 
       <div class="mb-6">
         <label for="address"
           class="block mb-2 text-sm font-medium text-gray-900 ">Address</label>
         <textarea id="address" placeholder="your address"
-          formControlName="address"
+          [formControl]="employeeForm.controls.address"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 "
           rows="5"></textarea>
       </div>

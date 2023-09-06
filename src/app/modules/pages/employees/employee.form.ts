@@ -12,11 +12,10 @@ export class EmployeeFormClass {
     return this.#fb.group({
       name: ['', Validators.required],
       age: [{ value: 0, disabled: true }, [Validators.required, Validators.min(18)]],
-      birthOfDate: new Date(),
+      birthOfDate: [new Date(), [Validators.required]],
       address: '',
     })
   }
-
   patchEmployeeForm(form: EmployeeForm, employee: IEmployee): EmployeeForm {
     form.patchValue(employee);
     return form;
