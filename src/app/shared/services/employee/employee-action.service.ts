@@ -16,6 +16,7 @@ export class EmployeeActionService {
 
   #page = new BehaviorSubject<number>(1)
   page$ = this.#page.asObservable()
+  pageNumber = this.#page.value
   setPage(page: number) {
     this.#page.next(page)
   }

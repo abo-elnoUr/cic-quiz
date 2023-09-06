@@ -12,13 +12,13 @@ const api = `http://localhost:3000/employee`;
 export class EmployeeService {
 
   http = inject(HttpClient)
-  employeeAction = inject(EmployeeActionService)
+  #employeeAction = inject(EmployeeActionService)
 
   createEmployee(employee: IEmployee) {
     return this.http.post<IEmployeeResponse>(api, employee)
   }
 
-  employees$ = this.employeeAction.filter$.pipe(
+  employees$ = this.#employeeAction.filter$.pipe(
     switchMap(({ _limit, _page, q }) => this.http.get<IEmployeeResponse[]>(api, {
       params: {
         _limit, _page, q
@@ -27,9 +27,17 @@ export class EmployeeService {
     shareReplay(1)
   )
 
-  employeeById$ = this.employeeAction.employeeId$.pipe(
+  employeeById$ = this.#employeeAction.employeeId$.pipe(
     switchMap(id => this.http.get<IEmployeeResponse>(`${api}/${id}`)), shareReplay(1)
   )
+
+  updateEmployee(employee: IEmployee, id: string) {
+    return this.http.put<IEmployeeResponse>(`${api}/${id}`, employee)
+  }
+
+  deleteEmployee(id: number) {
+    return this.http.delete<void>(`${api}/${id}`)
+  }
 
 
 }

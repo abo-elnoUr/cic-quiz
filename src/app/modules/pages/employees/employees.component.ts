@@ -38,23 +38,38 @@ export class EmployeesComponent implements OnInit {
   convertDateToAge(date: Date) {
     const age = new Date().getFullYear() - new Date(date).getFullYear()
     this.age.set(age)
+    this.employeeForm.patchValue({ age: age })
   }
 
   getEmployeeById() {
     this.#employeeAction.setEmployeeId(+this.#employeeId());
+    this.setEmployee()
   }
 
   createEmployee() {
     this.#employeeService.createEmployee(this.employeeForm.getRawValue()).subscribe({
       next: (res) => {
         this.#sweetAlert.saveToast()
-        console.log(res);
+        this.#employeeAction.setRefreshEmployeeList()
+      }
+    })
+  }
+
+  setEmployee() {
+    this.employeeById$.subscribe({
+      next: (res) => {
+        this.#employeeFormClass.patchEmployeeForm(this.employeeForm, res)
       }
     })
   }
 
   editEmployee() {
-
+    this.#employeeService.updateEmployee(this.employeeForm.getRawValue(), this.#employeeId()).subscribe({
+      next: (res) => {
+        this.#sweetAlert.updateToast()
+        this.#employeeAction.setRefreshEmployeeList()
+      }
+    })
   }
 
 
@@ -65,11 +80,8 @@ export class EmployeesComponent implements OnInit {
     } else {
       this.showAgeError = false
     }
-    console.log(this.age(), this.showAgeError);
-
-
-    // if(+this.#employeeId() === 0) this.createEmployee();
-    // else this.editEmployee();
+    if(+this.#employeeId() === 0) this.createEmployee();
+    else this.editEmployee();
   }
 
 

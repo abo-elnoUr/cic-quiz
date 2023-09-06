@@ -6,3 +6,8 @@ export type EmployeeForm = FormGroup<{
   birthOfDate: FormControl<Date>;
   address: FormControl<string>;
 }>
+
+export type SearchForm = FormGroup<{
+  search: FormControl<string>;
+}>
+

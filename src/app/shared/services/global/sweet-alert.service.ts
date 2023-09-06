@@ -63,4 +63,18 @@ export class SweetAlertService {
       color: '#ff0000'
     })
   }
+
+  makeSureDelete(): Promise<any> | null {
+    return Swal.fire({
+      title:  'Are you sure you want to delete?',
+      text:  `Data can't be recovered` ,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Accept' ,
+      confirmButtonColor: '#3f51b5',
+      cancelButtonText: 'Cancel' ,
+      focusConfirm: true
+    })
+  }
+
 }

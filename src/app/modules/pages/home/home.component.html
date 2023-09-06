@@ -1,1 +1,99 @@
-<h1 class="underline font-nunito">home</h1>
+<section class="  m-5 justify-items-center">
+  <div class="grid grid-flow-col justify-between">
+    <h1 class="font-bold text-2xl text-gray-500 mb-10">List Of Employees</h1>
+    <button type="button" routerLink="./employee/0"
+      class="text-white bg-blue-700 w-fit h-fit hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  focus:outline-none ">Add
+      Employee</button>
+  </div>
+
+  <div class="mx-2 mb-5">
+    <form [formGroup]="searchForm">
+      <label for="default-search"
+        class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
+      <div class="relative">
+        <div
+          class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-500 "
+            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="2"
+              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+          </svg>
+        </div>
+        <input type="search" id="default-search" formControlName="search"
+          class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none "
+          placeholder="Search..." >
+        <!-- <button type="submit"
+          class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 ">Search</button> -->
+      </div>
+    </form>
+  </div>
+
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg font-nunito">
+    <table class="w-full text-sm text-left text-gray-500 ">
+      <thead
+        class="text-xs text-gray-700 uppercase bg-gray-50 ">
+        <tr>
+          <th scope="col" class="px-6 py-3">
+            Name
+          </th>
+          <th scope="col" class="px-6 py-3">
+            BirthDate
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Age
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Address
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bg-white border-b"
+          *ngFor="let emp of employees$ | async; let i = index">
+          <th scope="row"
+            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+            {{ emp.name }}
+          </th>
+          <td class="px-6 py-4">
+            {{ emp.birthOfDate | date: 'dd/MM/yyyy' }}
+          </td>
+          <td class="px-6 py-4">
+            {{ emp.age }}
+          </td>
+          <td class="px-6 py-4">
+            {{ emp.address }}
+          </td>
+          <td class="flex items-center px-6 py-4 space-x-3">
+            <a [routerLink]="'./employee/' + emp.id"
+              class="font-medium text-blue-600  hover:underline">Edit</a>
+            <a (click)="onDelete(emp.id)"
+              class="font-medium text-red-600  hover:underline hover:cursor-pointer">Remove</a>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+    <div class="grid justify-center my-3">
+      <div class="flex">
+        <a (click)="onPrevious()"
+          class="flex items-center justify-center px-3 h-8 hover:cursor-pointer text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 ">
+          Previous
+        </a>
+        <a
+          class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 ">
+          {{ pageNumber }}
+        </a>
+
+        <a (click)="onNext()"
+          class="flex items-center justify-center px-3 h-8 hover:cursor-pointer ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 ">
+          Next
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
