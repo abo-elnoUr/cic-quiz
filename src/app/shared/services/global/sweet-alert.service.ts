@@ -83,8 +83,8 @@ export class SweetAlertService {
       customClass: {
         'container': 'pre-line'
       },
-      title:  'Something Wrong!!',
-      text: err,
+      title: err,
+      text: 'Something Wrong!!',
       focusConfirm: true
     })
   }
